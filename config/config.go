@@ -1,44 +1,45 @@
 package config
 
-import (
+import(
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"os"
 )
 
-var (
-	Token     string
+var(
+	Token string
 	BotPrefix string
 
 	config *configStruct
 )
 
-type configStruct struct {
-	Token     string `json:"Token"`
+
+type configStruct struct{
+	Token string `json:"Token"`
 	BotPrefix string `json:"BotPrefix"`
 }
 
-func ReadConfig() error {
+func ReadConfig() error{
 	fmt.Println("Reading config file...")
 
-	file, err := ioutil.ReadFile("config.json")
-	if err == nil {
-		err = json.Unmarshal(file, &config)
-		if err == nil {
-			Token = config.Token
-			BotPrefix = config.BotPrefix
-			return nil
-		}
+	file, err:=ioutil.ReadFile("config.json")
+
+	if err!=nil{
+		fmt.Println(err.Error())
+		return err
+	}
+	fmt.Println(string(file))
+
+	err=json.Unmarshal(file, &config)
+
+	if err!=nil{
+		fmt.Println(err.Error())
+		return err
 	}
 
-	// Fallback to environment variables
-	Token = os.Getenv("TOKEN")
-	BotPrefix = os.Getenv("BOT_PREFIX")
-
-	if Token == "" || BotPrefix == "" {
-		return fmt.Errorf("config not found in file or environment variables")
-	}
-
+	Token=config.Token
+	BotPrefix=config.BotPrefix
+	
 	return nil
 }
+
