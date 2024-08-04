@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"github.com/GokulAnithaNandakumar/discord-ping/bot"
 	"github.com/GokulAnithaNandakumar/discord-ping/config"
 )
